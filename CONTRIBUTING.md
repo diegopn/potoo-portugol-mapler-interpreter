@@ -1,6 +1,6 @@
-# Contributing to potoo-mapler-interpreter
+# Contributing to Portugol Mapler
 
-Contributions to the Mapler interpreter, its tests, and its documentation are welcome.
+Contributions to the Portugol Mapler interpreter, its tests, and its documentation are welcome.
 
 ## Report a bug
 
