@@ -104,7 +104,7 @@ Invoke-WebRequest "$release/$asset" -OutFile $asset
 Invoke-WebRequest "$release/SHA256SUMS" -OutFile SHA256SUMS
 Get-FileHash ".\$asset" -Algorithm SHA256 # compare with the matching SHA256SUMS entry
 Expand-Archive ".\$asset" -DestinationPath .\potoo-portugol-mapler-interpreter
-.\potoo-mapler-interpreter\potoo-portugol-mapler-interpreter-v0.1.0-x86_64-pc-windows-msvc\potoo-mapler.exe .\example.mapler
+.\potoo-portugol-mapler-interpreter\potoo-portugol-mapler-interpreter-v0.1.0-x86_64-pc-windows-msvc\potoo-mapler.exe .\example.mapler
 ```
 
 To run `potoo-mapler.exe` from any folder, add its extracted directory to your user `PATH` in Windows Environment Variables.
