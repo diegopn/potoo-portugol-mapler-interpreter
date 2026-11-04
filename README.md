@@ -28,6 +28,14 @@ Implement `RuntimeIo` to provide input and output, then call `execute(source,
 &mut io)`. The public API and host callbacks are documented in the crate
 source. For a local checkout, run the interpreter's tests with `cargo test`.
 
+## Original language references
+
+- [Mapler user manual](https://portugol.sourceforge.io/manuais.html)
+- [Projeto-Mapler syntax reference](https://github.com/Projeto-Mapler/portugol)
+- [Mapler examples](https://portugol.sourceforge.io/exemplos/)
+
+These are the original language references for compatibility work. This repository provides an independent Rust implementation.
+
 ## Source example
 
 ```mapler
@@ -144,6 +152,10 @@ potoo-mapler-interpreter = { git = "https://github.com/diegopn/potoo-portugol-ma
 
 The library API lets Rust applications provide their own `RuntimeIo` implementation.
 
-## DOI
+## DOI and citation
 
-A stable Figshare DOI will be added when the first public release is published.
+DOI: [10.6084/m9.figshare.34914246](https://doi.org/10.6084/m9.figshare.34914246)
+
+Suggested reference (ABNT NBR 6023:2018):
+
+> NASCIMENTO, Diego Pereira do. *Portugol Mapler interpreter v0.1.0*. 2026. Programa de computador. Disponível em: https://doi.org/10.6084/m9.figshare.34914246. Acesso em: 4 nov. 2026.
