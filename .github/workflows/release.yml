@@ -43,7 +43,7 @@ jobs:
         run: |
           set -euo pipefail
           version="${{ github.event.inputs.tag || github.ref_name }}"
-          bundle="potoo-mapler-interpreter-${version}-${{ matrix.target }}"
+          bundle="potoo-portugol-mapler-interpreter-${version}-${{ matrix.target }}"
           mkdir -p "$bundle"
           cp "target/release/potoo-mapler" "$bundle/"
           tar -czf "$bundle.tar.gz" "$bundle"
@@ -59,7 +59,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: release-${{ matrix.target }}
-          path: potoo-mapler-interpreter-*-${{ matrix.target }}.*
+          path: potoo-portugol-mapler-interpreter-*-${{ matrix.target }}.*
           if-no-files-found: error
 
   publish:
