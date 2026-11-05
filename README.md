@@ -76,64 +76,52 @@ The terminal runner provides standard input/output and continues through debugge
 
 ## Install a prebuilt runner
 
-Download the archive for your system and `SHA256SUMS` from the [latest GitHub Release](https://github.com/diegopn/potoo-portugol-mapler-interpreter/releases/latest). Binary releases are not published yet. The planned first release will be tagged `v0.1.0`; its release workflow is configured to produce these asset names:
+Prebuilt binaries are published on the [GitHub Releases page](https://github.com/diegopn/potoo-portugol-mapler-interpreter/releases). Choose a version and the package for your system there. Packages are currently available for Linux x86_64, Windows x86_64 (MSVC), and Intel macOS (x86_64). The current release does not include an Apple silicon (arm64) package.
 
-| System | Archive |
-| --- | --- |
-| Linux x86_64 | `potoo-portugol-mapler-interpreter-v0.1.0-x86_64-unknown-linux-gnu.tar.gz` |
-| Windows x86_64 | `potoo-portugol-mapler-interpreter-v0.1.0-x86_64-pc-windows-msvc.zip` |
-| macOS Intel | `potoo-portugol-mapler-interpreter-v0.1.0-x86_64-apple-darwin.tar.gz` |
-
-
-Current CI and release targets are Linux x86_64, Windows x86_64, and macOS Intel (x86_64). Apple silicon (arm64) is not supported in this release; support may be added in a future version.
+Download only the package for your system and the `SHA256SUMS` file, and save both in the same folder. Before extracting or running the executable, compare the package's SHA-256 hash with its corresponding entry in `SHA256SUMS`. Run the commands below from that folder. Replace `example.mapler` with the path to a source file you want to run; the release package does not include a sample file.
 
 ### Linux x86_64
 
 ```sh
-asset=potoo-portugol-mapler-interpreter-v0.1.0-x86_64-unknown-linux-gnu.tar.gz
-release=https://github.com/diegopn/potoo-portugol-mapler-interpreter/releases/download/v0.1.0
-curl -fLO "$release/$asset"
-curl -fLO "$release/SHA256SUMS"
+asset=$(ls -1 potoo-portugol-mapler-interpreter-v*-x86_64-unknown-linux-gnu.tar.gz | head -n 1)
 sha256sum "$asset" # compare with its line in SHA256SUMS
 tar -xzf "$asset"
 mkdir -p "$HOME/.local/bin"
-install -m 755 "potoo-portugol-mapler-interpreter-v0.1.0-x86_64-unknown-linux-gnu/potoo-mapler" "$HOME/.local/bin/potoo-mapler"
+install -m 755 "${asset%.tar.gz}/potoo-mapler" "$HOME/.local/bin/potoo-mapler"
+export PATH="$HOME/.local/bin:$PATH"
 potoo-mapler example.mapler
 ```
 
-Add it for the current shell with `export PATH="$HOME/.local/bin:$PATH"`; place that line in your shell profile to keep it for future sessions.
+To keep the command available in new Linux sessions, add the `export PATH="$HOME/.local/bin:$PATH"` line to your shell profile.
 
 ### Windows x86_64 (PowerShell)
 
 ```powershell
-$asset = "potoo-portugol-mapler-interpreter-v0.1.0-x86_64-pc-windows-msvc.zip"
-$release = "https://github.com/diegopn/potoo-portugol-mapler-interpreter/releases/download/v0.1.0"
-Invoke-WebRequest "$release/$asset" -OutFile $asset
-Invoke-WebRequest "$release/SHA256SUMS" -OutFile SHA256SUMS
-Get-FileHash ".\$asset" -Algorithm SHA256 # compare with the matching SHA256SUMS entry
-Expand-Archive ".\$asset" -DestinationPath .\potoo-portugol-mapler-interpreter
-.\potoo-portugol-mapler-interpreter\potoo-portugol-mapler-interpreter-v0.1.0-x86_64-pc-windows-msvc\potoo-mapler.exe .\example.mapler
+$archive = Get-ChildItem -Filter "potoo-portugol-mapler-interpreter-v*-x86_64-pc-windows-msvc.zip" | Select-Object -First 1
+Get-FileHash $archive.FullName -Algorithm SHA256 # compare with the matching SHA256SUMS entry
+Expand-Archive $archive.FullName -DestinationPath .\potoo-mapler
+$exe = Get-ChildItem .\potoo-mapler -Filter "potoo-mapler.exe" -Recurse | Select-Object -First 1
+& $exe.FullName .\example.mapler
 ```
 
-To run `potoo-mapler.exe` from any folder, add its extracted directory to your user `PATH` in Windows Environment Variables.
+To run `potoo-mapler.exe` from another folder, add the directory containing the executable to your user `PATH`.
 
-### macOS Intel
+### Intel macOS
 
-This release supports Intel Macs only. Apple silicon is not supported in this version.
+The published macOS package targets Intel Macs (x86_64). There is no prebuilt Apple silicon package in the current release.
 
 ```sh
-asset=potoo-portugol-mapler-interpreter-v0.1.0-x86_64-apple-darwin.tar.gz
-release=https://github.com/diegopn/potoo-portugol-mapler-interpreter/releases/download/v0.1.0
-curl -fLO "$release/$asset"
-curl -fLO "$release/SHA256SUMS"
+asset=$(ls -1 potoo-portugol-mapler-interpreter-v*-x86_64-apple-darwin.tar.gz | head -n 1)
 shasum -a 256 "$asset" # compare with its line in SHA256SUMS
 tar -xzf "$asset"
 mkdir -p "$HOME/.local/bin"
 install -m 755 "${asset%.tar.gz}/potoo-mapler" "$HOME/.local/bin/potoo-mapler"
+export PATH="$HOME/.local/bin:$PATH"
 potoo-mapler example.mapler
 ```
 
-Add it for the current shell with `export PATH="$HOME/.local/bin:$PATH"`; place that line in `~/.zprofile` to keep it for future macOS sessions.
+Add the `export PATH="$HOME/.local/bin:$PATH"` line to `~/.zprofile` to keep the command available in future macOS sessions.
+
 
 ## Install from source
 
