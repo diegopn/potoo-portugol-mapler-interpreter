@@ -29,14 +29,6 @@ The interpreter supports documented variable types and vectors, `escrever`/`ler`
 
 These are the original language references for compatibility work. This repository provides an independent Rust implementation.
 
-## Original language references
-
-- [Mapler user manual](https://portugol.sourceforge.io/manuais.html)
-- [Projeto-Mapler syntax reference](https://github.com/Projeto-Mapler/portugol)
-- [Mapler examples](https://portugol.sourceforge.io/exemplos/)
-
-These are the original language references for compatibility work. This repository provides an independent Rust implementation.
-
 ## Source example
 
 ```mapler
@@ -59,6 +51,14 @@ cargo test
 ## License
 
 GPL-3.0-or-later. See [LICENSE](LICENSE).
+
+## Support
+
+If this interpreter is useful in your work, you can support its continued development:
+
+<p align="left">
+  <a href="https://github.com/sponsors/diegopn"><img alt="Become a sponsor" src="https://img.shields.io/badge/Become_a_sponsor-EA4AAA?style=for-the-badge&logo=githubsponsors&logoColor=white"></a>
+</p>
 
 ## Project policies
 
@@ -141,14 +141,6 @@ potoo-mapler-interpreter = { git = "https://github.com/diegopn/potoo-portugol-ma
 ```
 
 The library API lets Rust applications provide their own `RuntimeIo` implementation.
-
-## Support
-
-If this interpreter is useful in your work, you can support its continued development:
-
-<p align="left">
-  <a href="https://github.com/sponsors/diegopn"><img alt="Become a sponsor" src="https://img.shields.io/badge/Become_a_sponsor-EA4AAA?style=for-the-badge&logo=githubsponsors&logoColor=white"></a>
-</p>
 
 ## DOI and citation
 
