@@ -19,6 +19,8 @@
   <img alt="CLI" src="https://img.shields.io/badge/CLI-6A4C93?style=for-the-badge">
 </p>
 
+Originally developed as part of the Potoo IDE project, this interpreter is an independent Rust software package intended to be distributed separately from the IDE. It can be embedded as a library in other Rust projects or run as a standalone command-line tool on Linux, macOS, and Windows.
+
 The interpreter supports documented variable types and vectors, `escrever`/`ler`, arithmetic and logical expressions, control flow, and modules. The original Mapler IDE stores source files as `.txt` and defines no official extension; `.mapler` is a Potoo convention based on DesignLiquido’s project, not the original IDE. Syntax and behavior follow Projeto-Mapler’s documentation.
 
 ## Original language references
