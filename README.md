@@ -29,6 +29,14 @@ The interpreter supports documented variable types and vectors, `escrever`/`ler`
 
 These are the original language references for compatibility work. This repository provides an independent Rust implementation.
 
+## Original language references
+
+- [Mapler user manual](https://portugol.sourceforge.io/manuais.html)
+- [Projeto-Mapler syntax reference](https://github.com/Projeto-Mapler/portugol)
+- [Mapler examples](https://portugol.sourceforge.io/exemplos/)
+
+These are the original language references for compatibility work. This repository provides an independent Rust implementation.
+
 ## Source example
 
 ```mapler
