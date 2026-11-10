@@ -1,32 +1,33 @@
-# Portugol Mapler Interpreter
+<p align="center">
+  <img src="https://diegopn.github.io/potoo-site/src/assets/images/language-interpreter-icon.svg?v=1c651ca7" alt="Potoo IDE language interpreter icon" width="120" />
+</p>
 
-Independent Rust interpreter for the Portugol Mapler syntax documented by the
-[Projeto-Mapler Portugol repository](https://github.com/Projeto-Mapler/portugol)
-and the [Mapler examples](https://portugol.sourceforge.io/exemplos/).
+<h1 align="center">Portugol Mapler Interpreter</h1>
 
-It implements the documented variable types and vectors, `escrever`/`ler`,
-arithmetic and logical expressions, `se`/`senao`, `para`/`enquanto`/`repita`,
-and declared modules. It exposes source-located diagnostics, type checking,
-runtime limits, input/output hooks, and debugger events for host applications.
+<p align="center">An independent Rust interpreter library and CLI for documented Portugol Mapler syntax.</p>
 
-The original Mapler IDE stores source files as `.txt`. This interpreter does
-not define an official file extension. The `.mapler` suffix used by Potoo
-follows [DesignLiquido's Mapler project](https://github.com/DesignLiquido/mapler)
-and is not attributed to the original IDE; syntax and behavior follow
-Projeto-Mapler's documentation above.
+<p align="center">
+  <a href="https://github.com/diegopn/potoo-portugol-mapler-interpreter/releases/latest">Download</a> ·
+  <a href="https://diegopn.github.io/potoo-site/">Website</a> ·
+  <a href="https://diegopn.github.io/potoo-site/manual/mapler/">User manual</a>
+</p>
 
-The crate exports a Rust library and includes a standalone terminal command-line runner. Install Rust
-1.93 or later, clone this repository, and add the crate to a Rust application
-using a Git dependency pinned to commit `147b5b88bd4aa8833bc7966e048d6f835fc3c7ce`:
+<p align="center">
+  <a href="https://www.rust-lang.org/"><img alt="Rust" src="https://img.shields.io/badge/Rust-000000?style=for-the-badge&logo=rust&logoColor=white"></a>
+  <a href="https://doc.rust-lang.org/cargo/"><img alt="Cargo" src="https://img.shields.io/badge/Cargo-DEA584?style=for-the-badge&logo=rust&logoColor=white"></a>
+  <img alt="Rust library" src="https://img.shields.io/badge/Rust_library-4A86CF?style=for-the-badge">
+  <img alt="CLI" src="https://img.shields.io/badge/CLI-6A4C93?style=for-the-badge">
+</p>
 
-```toml
-[dependencies]
-potoo-mapler-interpreter = { git = "https://github.com/diegopn/potoo-portugol-mapler-interpreter.git", rev = "147b5b88bd4aa8833bc7966e048d6f835fc3c7ce" }
-```
+The interpreter supports documented variable types and vectors, `escrever`/`ler`, arithmetic and logical expressions, control flow, and modules. The original Mapler IDE stores source files as `.txt` and defines no official extension; `.mapler` is a Potoo convention based on DesignLiquido’s project, not the original IDE. Syntax and behavior follow Projeto-Mapler’s documentation.
 
-Implement `RuntimeIo` to provide input and output, then call `execute(source,
-&mut io)`. The public API and host callbacks are documented in the crate
-source. For a local checkout, run the interpreter's tests with `cargo test`.
+## Original language references
+
+- [Mapler user manual](https://portugol.sourceforge.io/manuais.html)
+- [Projeto-Mapler syntax reference](https://github.com/Projeto-Mapler/portugol)
+- [Mapler examples](https://portugol.sourceforge.io/exemplos/)
+
+These are the original language references for compatibility work. This repository provides an independent Rust implementation.
 
 ## Original language references
 
@@ -59,8 +60,17 @@ cargo test
 
 GPL-3.0-or-later. See [LICENSE](LICENSE).
 
+## Support
+
+If this interpreter is useful in your work, you can support its continued development:
+
+<p align="left">
+  <a href="https://github.com/sponsors/diegopn"><img alt="Become a sponsor" src="https://img.shields.io/badge/Become_a_sponsor-EA4AAA?style=for-the-badge&logo=githubsponsors&logoColor=white"></a>
+</p>
+
 ## Project policies
 
+- [Code of conduct](CODE_OF_CONDUCT.md)
 - [Contributing](CONTRIBUTING.md)
 - [Security policy](SECURITY.md)
 
