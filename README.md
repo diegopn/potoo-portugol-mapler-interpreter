@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="https://diegopn.github.io/potoo-site/src/assets/images/language-interpreter-icon.svg" alt="Potoo IDE language interpreter icon" width="120" />
+</p>
+
 <h1 align="center">Portugol Mapler Interpreter</h1>
 
 <p align="center">An independent Rust interpreter library and CLI for documented Portugol Mapler syntax.</p>
