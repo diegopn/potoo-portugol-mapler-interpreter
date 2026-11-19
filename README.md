@@ -88,51 +88,68 @@ The terminal runner provides standard input/output and continues through debugge
 
 ## Install a prebuilt runner
 
-Prebuilt binaries are published on the [GitHub Releases page](https://github.com/diegopn/potoo-portugol-mapler-interpreter/releases). Choose a version and the package for your system there. Packages are currently available for Linux x86_64, Windows x86_64 (MSVC), and Intel macOS (x86_64). The current release does not include an Apple silicon (arm64) package.
+The v0.1.1 release provides native CLI packages for Linux x86_64 GNU, Windows x86_64 MSVC, Intel macOS x86_64, and Apple silicon macOS arm64. Download your system's archive and `SHA256SUMS` from the [latest GitHub release](https://github.com/diegopn/potoo-portugol-mapler-interpreter/releases/latest), then run the matching commands below from the folder containing both files. Each archive contains `potoo-mapler` (or `potoo-mapler.exe` on Windows) and the repository license. The package does not include a sample file; save the source example above as `example.mapler` or use your own file.
 
-Download only the package for your system and the `SHA256SUMS` file, and save both in the same folder. Before extracting or running the executable, compare the package's SHA-256 hash with its corresponding entry in `SHA256SUMS`. Run the commands below from that folder. Replace `example.mapler` with the path to a source file you want to run; the release package does not include a sample file.
-
-### Linux x86_64
+### Linux x86_64 GNU
 
 ```sh
-asset=$(ls -1 potoo-portugol-mapler-interpreter-v*-x86_64-unknown-linux-gnu.tar.gz | head -n 1)
-sha256sum "$asset" # compare with its line in SHA256SUMS
-tar -xzf "$asset"
+set -euo pipefail
+archive="potoo-portugol-mapler-interpreter-v0.1.1-x86_64-unknown-linux-gnu.tar.gz"
+grep -F "  $archive" SHA256SUMS | sha256sum --check -
+tar -xzf "$archive"
 mkdir -p "$HOME/.local/bin"
-install -m 755 "${asset%.tar.gz}/potoo-mapler" "$HOME/.local/bin/potoo-mapler"
+install -m 755 "${archive%.tar.gz}/potoo-mapler" "$HOME/.local/bin/potoo-mapler"
 export PATH="$HOME/.local/bin:$PATH"
 potoo-mapler example.mapler
 ```
 
 To keep the command available in new Linux sessions, add the `export PATH="$HOME/.local/bin:$PATH"` line to your shell profile.
 
-### Windows x86_64 (PowerShell)
+### Windows x86_64 MSVC (PowerShell)
 
 ```powershell
-$archive = Get-ChildItem -Filter "potoo-portugol-mapler-interpreter-v*-x86_64-pc-windows-msvc.zip" | Select-Object -First 1
-Get-FileHash $archive.FullName -Algorithm SHA256 # compare with the matching SHA256SUMS entry
-Expand-Archive $archive.FullName -DestinationPath .\potoo-mapler
-$exe = Get-ChildItem .\potoo-mapler -Filter "potoo-mapler.exe" -Recurse | Select-Object -First 1
-& $exe.FullName .\example.mapler
+$archive = "potoo-portugol-mapler-interpreter-v0.1.1-x86_64-pc-windows-msvc.zip"
+$line = Get-Content .\SHA256SUMS | Where-Object { $_.EndsWith("  $archive") } | Select-Object -First 1
+if (-not $line) { throw "No SHA256SUMS entry found for $archive" }
+$expected = ($line -split '\s+')[0]
+$actual = (Get-FileHash -LiteralPath $archive -Algorithm SHA256).Hash.ToLowerInvariant()
+if ($actual -ne $expected) { throw "SHA-256 mismatch for $archive" }
+$installDir = Join-Path $env:USERPROFILE ".local\bin"
+New-Item -ItemType Directory -Force $installDir | Out-Null
+Expand-Archive -LiteralPath $archive -DestinationPath $installDir
+$exe = Join-Path $installDir "potoo-portugol-mapler-interpreter-v0.1.1-x86_64-pc-windows-msvc\potoo-mapler.exe"
+& $exe .\example.mapler
 ```
 
-To run `potoo-mapler.exe` from another folder, add the directory containing the executable to your user `PATH`.
+To run `potoo-mapler.exe` from any folder, add `$env:USERPROFILE\.local\bin\potoo-portugol-mapler-interpreter-v0.1.1-x86_64-pc-windows-msvc` to your user `Path` environment variable in Windows Settings.
 
-### Intel macOS
-
-The published macOS package targets Intel Macs (x86_64). There is no prebuilt Apple silicon package in the current release.
+### Intel macOS x86_64
 
 ```sh
-asset=$(ls -1 potoo-portugol-mapler-interpreter-v*-x86_64-apple-darwin.tar.gz | head -n 1)
-shasum -a 256 "$asset" # compare with its line in SHA256SUMS
-tar -xzf "$asset"
+set -euo pipefail
+archive="potoo-portugol-mapler-interpreter-v0.1.1-x86_64-apple-darwin.tar.gz"
+grep -F "  $archive" SHA256SUMS | shasum -a 256 -c -
+tar -xzf "$archive"
 mkdir -p "$HOME/.local/bin"
-install -m 755 "${asset%.tar.gz}/potoo-mapler" "$HOME/.local/bin/potoo-mapler"
+install -m 755 "${archive%.tar.gz}/potoo-mapler" "$HOME/.local/bin/potoo-mapler"
 export PATH="$HOME/.local/bin:$PATH"
 potoo-mapler example.mapler
 ```
 
-Add the `export PATH="$HOME/.local/bin:$PATH"` line to `~/.zprofile` to keep the command available in future macOS sessions.
+### Apple silicon macOS arm64
+
+```sh
+set -euo pipefail
+archive="potoo-portugol-mapler-interpreter-v0.1.1-aarch64-apple-darwin.tar.gz"
+grep -F "  $archive" SHA256SUMS | shasum -a 256 -c -
+tar -xzf "$archive"
+mkdir -p "$HOME/.local/bin"
+install -m 755 "${archive%.tar.gz}/potoo-mapler" "$HOME/.local/bin/potoo-mapler"
+export PATH="$HOME/.local/bin:$PATH"
+potoo-mapler example.mapler
+```
+
+On macOS, add the `export PATH="$HOME/.local/bin:$PATH"` line to `~/.zprofile` to keep the command available in future sessions.
 
 
 ## Install from source
@@ -140,7 +157,7 @@ Add the `export PATH="$HOME/.local/bin:$PATH"` line to `~/.zprofile` to keep the
 With Rust 1.93 or later and network access, Cargo can install the command directly from its tagged source:
 
 ```sh
-cargo install --git https://github.com/diegopn/potoo-portugol-mapler-interpreter.git --rev 147b5b88bd4aa8833bc7966e048d6f835fc3c7ce --bin potoo-mapler
+cargo install --git https://github.com/diegopn/potoo-portugol-mapler-interpreter.git --tag v0.1.1 --bin potoo-mapler
 ```
 
 ## Use as a Rust library
